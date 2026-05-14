@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nettoyeur Pro — Conformité & Traçabilité HACCP</title>
+    <meta name="description" content="Nettoyeur Pro automatise la gestion des cahiers des charges, la traçabilité des nettoyages et la conformité HACCP pour les supermarchés et entreprises de nettoyage.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #0066FF;
+            --primary-dark: #0052CC;
+            --success: #16A34A;
+            --text: #1A202C;
+            --text-light: #4A5568;
+            --bg: #FFFFFF;
+            --bg-alt: #F7F9FC;
+            --radius: 12px;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        
+        /* Header */
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { font-size: 24px; font-weight: 700; }
+        .logo span { color: rgba(255,255,255,0.85); font-weight: 400; }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 24px;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+        nav a:hover { opacity: 1; }
+        .btn-primary {
+            background: white;
+            color: var(--primary);
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-primary:hover { background: #f0f0f0; }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #0066FF 0%, #0044AA 100%);
+            color: white;
+            padding: 100px 0 80px;
+            text-align: center;
+        }
+        .hero h1 { font-size: 48px; margin-bottom: 20px; }
+        .hero p { font-size: 20px; opacity: 0.9; max-width: 700px; margin: 0 auto 32px; }
+        .hero .btn-primary { font-size: 18px; padding: 16px 36px; }
+        .hero .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.5);
+            padding: 14px 36px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 18px;
+            text-decoration: none;
+            display: inline-block;
+            margin-left: 16px;
+        }
+        .hero .btn-outline:hover { border-color: white; }
+
+        /* Sections */
+        section { padding: 80px 0; }
+        section:nth-child(even) { background: var(--bg-alt); }
+        h2 { font-size: 36px; margin-bottom: 16px; text-align: center; }
+        .subtitle { text-align: center; color: var(--text-light); max-width: 600px; margin: 0 auto 48px; font-size: 18px; }
+
+        /* Features grid */
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+        .feature-card {
+            background: white;
+            padding: 32px;
+            border-radius: var(--radius);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid #E2E8F0;
+        }
+        .feature-card h3 { font-size: 20px; margin-bottom: 12px; }
+        .feature-card p { color: var(--text-light); font-size: 15px; }
+        .feature-icon { font-size: 36px; margin-bottom: 16px; }
+
+        /* Modes */
+        .modes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+        .mode-card {
+            padding: 40px;
+            border-radius: var(--radius);
+            border: 1px solid #E2E8F0;
+        }
+        .mode-card.interne { background: #EBF5FF; border-color: #B3D9FF; }
+        .mode-card.pro { background: #F3E8FF; border-color: #D4B3FF; }
+        .mode-card h3 { font-size: 22px; margin-bottom: 16px; }
+        .mode-card ul { list-style: none; }
+        .mode-card li { padding: 8px 0; color: var(--text-light); }
+        .mode-card li::before { content: "✅ "; }
+
+        /* Pricing */
+        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .pricing-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            text-align: center;
+            border: 1px solid #E2E8F0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .pricing-card.featured { border-color: var(--primary); transform: scale(1.05); }
+        .pricing-card .price { font-size: 42px; font-weight: 700; color: var(--primary); }
+        .pricing-card .price span { font-size: 16px; color: var(--text-light); }
+        .pricing-card h3 { font-size: 20px; margin-bottom: 8px; }
+        .pricing-card p { color: var(--text-light); margin: 8px 0 24px; }
+        .pricing-card ul { list-style: none; text-align: left; padding: 0 20px; }
+        .pricing-card li { padding: 8px 0; color: var(--text-light); border-bottom: 1px solid #F0F0F0; }
+        .pricing-card li::before { content: "✓ "; color: var(--success); font-weight: bold; }
+        .pricing-card .btn-primary { margin-top: 24px; }
+
+        /* Footer */
+        footer {
+            background: #1A202C;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        footer p { opacity: 0.6; font-size: 14px; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 32px; }
+            .modes-grid { grid-template-columns: 1fr; }
+            .pricing-grid { grid-template-columns: 1fr; }
+            .pricing-card.featured { transform: none; }
+            nav a { margin-left: 12px; font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">Nettoyeur <span>Pro</span></div>
+            <nav>
+                <a href="#features">Fonctionnalités</a>
+                <a href="#modes">Modes</a>
+                <a href="#pricing">Tarifs</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>La conformité HACCP simplifiée</h1>
+            <p>Automatisez la gestion de vos cahiers des charges, la traçabilité des nettoyages et les contrôles sanitaires. Gagnez du temps, évitez les amendes.</p>
+            <a href="#contact" class="btn-primary">Demander une démo</a>
+            <a href="#features" class="btn-outline">En savoir plus</a>
+        </div>
+    </section>
+
+    <section id="features">
+        <div class="container">
+            <h2>Une plateforme complète</h2>
+            <p class="subtitle">Tout ce dont vous avez besoin pour assurer la conformité et la traçabilité de vos opérations de nettoyage.</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3>Checklists HACCP</h3>
+                    <p>Contrôles sanitaires quotidiens avec validation automatique selon les seuils HACCP.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌡️</div>
+                    <h3>Relevés température</h3>
+                    <p>Scan QR code par zone froide, saisie rapide et validation en temps réel.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Scan sans app</h3>
+                    <p>Scannez le QR code avec n'importe quel téléphone pour remplir un relevé sans installer l'application.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Rapports automatiques</h3>
+                    <p>Générez des rapports de conformité prêts pour les inspections DDPP en un clic.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Traçabilité complète</h3>
+                    <p>Chaque action est horodatée et attribuée à un opérateur. Historique complet.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Conformité réglementaire</h3>
+                    <p>Respect des normes HACCP, NF X50-780 et règlement UE 2017/625.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="modes">
+        <div class="container">
+            <h2>Deux modes d'usage</h2>
+            <p class="subtitle">Une solution adaptée à votre organisation.</p>
+            <div class="modes-grid">
+                <div class="mode-card interne">
+                    <h3>🏪 Mode Interne</h3>
+                    <p style="margin-bottom: 20px;">Pour les supermarchés et magasins qui gèrent leurs propres équipes.</p>
+                    <ul>
+                        <li>Gestion des zones froides avec QR codes</li>
+                        <li>Relevés de température HACCP</li>
+                        <li>Checklists de nettoyage et contrôles</li>
+                        <li>Rapports internes de conformité</li>
+                        <li>Opérateurs internes invités par le responsable</li>
+                    </ul>
+                </div>
+                <div class="mode-card pro">
+                    <h3>🤝 Mode Pro</h3>
+                    <p style="margin-bottom: 20px;">Pour les donneurs d'ordre avec prestataire de nettoyage.</p>
+                    <ul>
+                        <li>Suivi des missions par site</li>
+                        <li>Checklists de prestation personnalisées</li>
+                        <li>Validation client des interventions</li>
+                        <li>Rapports d'intervention automatiques</li>
+                        <li>Gestion des équipes externes</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing">
+        <div class="container">
+            <h2>Tarifs transparents</h2>
+            <p class="subtitle">Un abonnement par site, sans engagement.</p>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Interne</h3>
+                    <p>Pour les magasins en régie</p>
+                    <div class="price">129€ <span>/mois</span></div>
+                    <ul>
+                        <li>Gestion des zones froides</li>
+                        <li>Relevés QR code température</li>
+                        <li>Opérateurs internes illimités</li>
+                        <li>Rapports de conformité</li>
+                        <li>Support email</li>
+                    </ul>
+                    <a href="#contact" class="btn-primary">Choisir Interne</a>
+                </div>
+                <div class="pricing-card featured">
+                    <h3>Pro</h3>
+                    <p>Le plus populaire</p>
+                    <div class="price">299€ <span>/mois</span></div>
+                    <ul>
+                        <li>Tout le mode Interne +</li>
+                        <li>Gestion prestataire externe</li>
+                        <li>Missions et checklists pro</li>
+                        <li>Rapports automatiques</li>
+                        <li>Support prioritaire</li>
+                    </ul>
+                    <a href="#contact" class="btn-primary">Choisir Pro</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Groupe</h3>
+                    <p>Chaînes multi-sites</p>
+                    <div class="price" style="font-size: 36px;">Sur devis</div>
+                    <ul>
+                        <li>Tout le mode Pro +</li>
+                        <li>Multi-sites et multi-prestataires</li>
+                        <li>Tableau de bord consolidé</li>
+                        <li>API et intégrations</li>
+                        <li>Support dédié</li>
+                    </ul>
+                    <a href="#contact" class="btn-primary">Nous contacter</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" style="background: var(--primary); color: white;">
+        <div class="container" style="text-align: center;">
+            <h2 style="color: white;">Prêt à simplifier votre conformité ?</h2>
+            <p class="subtitle" style="color: rgba(255,255,255,0.85); max-width: 500px;">Contactez-nous pour une démo personnalisée de 30 minutes.</p>
+            <p style="font-size: 18px; margin-top: 24px;">📧 <a href="mailto:contact@nettoyeur.pro" style="color: white;">contact@nettoyeur.pro</a></p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 Nettoyeur Pro — Tous droits réservés.</p>
+            <p style="margin-top: 8px;">Conformité HACCP · NF X50-780 · Règlement UE 2017/625</p>
+        </div>
+    </footer>
+</body>
+</html>
