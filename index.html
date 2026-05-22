@@ -68,30 +68,10 @@
             position: relative;
             overflow: hidden;
         }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0; right: 0; bottom: 0; left: 0;
-            background: url('np-app-screenshot.jpg') no-repeat right center/contain;
-            opacity: 0.1;
-            z-index: 0;
-        }
         .hero .container { position: relative; z-index: 1; }
         .hero .hero-text { text-align: center; }
-        .hero .hero-cap {
-            font-size: 120px;
-            font-weight: 900;
-            line-height: 1;
-            letter-spacing: -4px;
-            margin-bottom: 8px;
-            text-shadow: 0 4px 24px rgba(0,0,0,0.5), 0 8px 40px rgba(0,0,0,0.3);
-            background: linear-gradient(180deg, #fff 0%, #93c5fd 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
         .hero h1 {
-            font-size: 28px;
+            font-size: 48px;
             font-weight: 400;
             margin-bottom: 20px;
             opacity: 0.95;
@@ -112,6 +92,35 @@
             margin-left: 16px;
         }
         .hero .btn-outline:hover { border-color: white; }
+        .hero .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+        .hero .hero-text { text-align: left; }
+        .hero .hero-phone { display: flex; justify-content: center; align-items: center; }
+        .hero .phone-frame-hero {
+            width: 260px; height: 520px;
+            background: #111;
+            border-radius: 32px;
+            padding: 10px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.1);
+            position: relative;
+        }
+        .hero .phone-notch-hero {
+            position: absolute; top: 10px; left: 50%;
+            transform: translateX(-50%);
+            width: 100px; height: 22px;
+            background: #111;
+            border-radius: 0 0 14px 14px;
+            z-index: 2;
+        }
+        .hero .phone-screen-hero {
+            width: 100%; height: 100%;
+            border-radius: 24px;
+            object-fit: cover;
+        }
         .hero .app-store-badges {
             display: flex;
             gap: 12px;
@@ -135,6 +144,12 @@
         .hero .app-badge .badge-icon { font-size: 22px; }
         .hero .app-badge .badge-text { line-height: 1.2; }
         .hero .app-badge .badge-small { font-size: 10px; opacity: 0.7; }
+        @media (max-width: 768px) {
+            .hero .hero-grid { grid-template-columns: 1fr; text-align: center; }
+            .hero .hero-text { text-align: center; }
+            .hero .hero-phone { order: -1; margin-bottom: 24px; }
+            .hero .phone-frame-hero { width: 200px; height: 400px; }
+        }
 
         /* Sections */
         section { padding: 80px 0; }
@@ -266,7 +281,6 @@
         <div class="container">
             
                 <div class="hero-text">
-                    <div class="hero-cap">CAP</div>
                     <h1>La conformité HACCP simplifiée</h1>
                     <p>Automatisez la gestion de vos cahiers des charges, la traçabilité des nettoyages et les contrôles sanitaires. Gagnez du temps, évitez les amendes.</p>
                     <a href="javascript:void(0)" class="btn-primary" onclick="openDemoModal()">Demander une démo</a>
@@ -277,7 +291,7 @@
                             <span class="badge-text"><span class="badge-small">Disponible sur</span><br>Google Play</span>
                         </a>
                         <a href="#" class="app-badge">
-                            <span class="badge-icon">🍎</span>
+                            
                             <span class="badge-text"><span class="badge-small">Bientôt sur</span><br>App Store</span>
                         </a>
                     </div>
