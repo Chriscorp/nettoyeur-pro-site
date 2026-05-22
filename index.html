@@ -148,11 +148,18 @@
             border-radius: 2px;
             display: block;
         }
-        .hero .phone-screen-hero {
+        .hero .phone-screen-wrap {
             width: 100%; height: 100%;
             border-radius: 30px;
-            object-fit: cover;
-            display: block;
+            overflow: hidden;
+            position: relative;
+        }
+        .hero .phone-screen-hero {
+            width: 100%;
+            position: absolute;
+            top: -40px;
+            left: 0;
+            border-radius: 0;
         }
         .hero .app-store-badges {
             display: flex;
@@ -333,7 +340,9 @@
                 <div class="hero-phone">
                     <div class="phone-frame-hero">
                         <div class="phone-notch-hero"></div>
-                        <img src="np-app-screenshot.jpg" alt="Aperçu Nettoyeur Pro" class="phone-screen-hero">
+                        <div class="phone-screen-wrap">
+                            <img src="np-app-screenshot.jpg" alt="Aperçu Nettoyeur Pro" class="phone-screen-hero">
+                        </div>
                     </div>
                 </div>
             </div>
