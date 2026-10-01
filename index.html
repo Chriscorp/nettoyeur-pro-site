@@ -1,659 +1,779 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nettoyeur Pro — Conformité & Traçabilité HACCP</title>
-    <meta name="description" content="Nettoyeur Pro automatise la gestion des cahiers des charges, la traçabilité des nettoyages et la conformité HACCP pour les supermarchés et entreprises de nettoyage.">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --primary: #0066FF;
-            --primary-dark: #0052CC;
-            --success: #16A34A;
-            --text: #1A202C;
-            --text-light: #4A5568;
-            --bg: #FFFFFF;
-            --bg-alt: #F7F9FC;
-            --radius: 12px;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            color: var(--text);
-            line-height: 1.6;
-        }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-        
-        /* Header */
-        header {
-            background: var(--primary);
-            color: white;
-            padding: 14px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        header .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .logo-icon {
-            width: 32px;
-            height: 32px;
-            background: #FFF;
-            border-radius: 8px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 8px;
-            font-size: 16px;
-        }
-        .logo span { font-weight: 400; opacity: 0.8; }
-        nav {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        nav a.nav-link {
-            color: rgba(255,255,255,0.8);
-            text-decoration: none;
-            padding: 8px 14px;
-            font-weight: 500;
-            font-size: 14px;
-            border-radius: 6px;
-            transition: all 0.2s;
-        }
-        nav a.nav-link:hover { background: rgba(255,255,255,0.1); color: #FFF; }
-        .nav-divider {
-            width: 1px;
-            height: 24px;
-            background: rgba(255,255,255,0.2);
-            margin: 0 8px;
-        }
-        .nav-btn {
-            display: inline-flex;
-            align-items: center;
-            padding: 8px 18px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 13px;
-            text-decoration: none;
-            transition: all 0.2s;
-            letter-spacing: 0.2px;
-        }
-        .nav-btn-signup {
-            background: transparent;
-            color: white;
-            border: 1.5px solid rgba(255,255,255,0.35);
-        }
-        .nav-btn-signup:hover {
-            background: rgba(255,255,255,0.1);
-            border-color: rgba(255,255,255,0.6);
-        }
-        .nav-btn-login {
-            background: linear-gradient(135deg, #FFF 0%, #F0F4FF 100%);
-            color: var(--primary);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-        }
-        .nav-btn-login:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-        .btn-primary {
-            background: white;
-            color: var(--primary);
-            padding: 12px 28px;
-            border-radius: 8px;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-block;
-        }
-        .btn-primary:hover { background: #f0f0f0; }
-
-        /* Hero */
-        .hero {
-            background: linear-gradient(135deg, #0a1e4a 0%, #0f2b5e 50%, #1a3a6b 100%);
-            color: white;
-            padding: 80px 0;
-            position: relative;
-            overflow: hidden;
-        }
-        .hero .container { position: relative; z-index: 1; }
-        .hero .hero-text { text-align: center; }
-        .hero h1 {
-            font-size: 48px;
-            font-weight: 400;
-            margin-bottom: 20px;
-            opacity: 0.95;
-            text-shadow: 0 2px 12px rgba(0,0,0,0.5), 0 4px 20px rgba(0,0,0,0.3);
-        }
-        .hero p { font-size: 20px; opacity: 1; max-width: 480px; margin: 0 0 32px; text-shadow: 0 2px 8px rgba(0,0,0,0.45), 0 4px 16px rgba(0,0,0,0.25); }
-        .hero .btn-primary { font-size: 18px; padding: 16px 36px; }
-        .hero .btn-outline {
-            background: rgba(0,0,0,0.25);
-            color: white;
-            border: 2px solid white;
-            padding: 14px 36px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 18px;
-            text-decoration: none;
-            display: inline-block;
-            margin-left: 16px;
-        }
-        .hero .btn-outline:hover { border-color: white; }
-        .hero .hero-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 48px;
-            align-items: center;
-        }
-        .hero .hero-text { text-align: left; }
-        .hero .hero-phone { display: flex; justify-content: center; align-items: center; }
-        .hero .phone-frame-hero {
-            width: 270px; height: 540px;
-            background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
-            border-radius: 40px;
-            padding: 12px;
-            box-shadow: 0 25px 80px rgba(0,0,0,0.5), 0 0 0 2px rgba(255,255,255,0.08), inset 0 0 0 1px rgba(255,255,255,0.05);
-            position: relative;
-        }
-        .hero .phone-frame-hero::before {
-            content: '';
-            position: absolute;
-            top: 80px; bottom: 80px; left: -3px;
-            width: 3px; background: linear-gradient(180deg, transparent, #333, transparent);
-            border-radius: 2px;
-        }
-        .hero .phone-frame-hero::after {
-            content: '';
-            position: absolute;
-            top: 160px; bottom: 160px; right: -3px;
-            width: 3px; background: linear-gradient(180deg, transparent, #444, transparent);
-            border-radius: 2px;
-        }
-        .hero .phone-notch-hero {
-            position: absolute; top: 12px; left: 50%;
-            transform: translateX(-50%);
-            width: 110px; height: 26px;
-            background: #0d0d0d;
-            border-radius: 0 0 16px 16px;
-            z-index: 2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-        .hero .phone-notch-hero::before {
-            content: '';
-            width: 8px; height: 8px;
-            background: radial-gradient(circle, #1a3a6b 30%, #0d1b2a 70%);
-            border-radius: 50%;
-            display: block;
-        }
-        .hero .phone-notch-hero::after {
-            content: '';
-            width: 16px; height: 4px;
-            background: #222;
-            border-radius: 2px;
-            display: block;
-        }
-        .hero .phone-screen-wrap {
-            width: 100%; height: 100%;
-            border-radius: 30px;
-            overflow: hidden;
-            position: relative;
-        }
-        .hero .phone-screen-hero {
-            width: 100%;
-            position: absolute;
-            top: -40px;
-            left: 0;
-            border-radius: 0;
-        }
-        .hero .app-store-badges {
-            display: flex;
-            gap: 12px;
-            margin-top: 24px;
-        }
-        .hero .app-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255,255,255,0.12);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 10px 20px;
-            border-radius: 12px;
-            color: white;
-            text-decoration: none;
-            font-size: 14px;
-            transition: background 0.2s;
-        }
-        .hero .app-badge:hover { background: rgba(255,255,255,0.2); }
-        .hero .app-badge .badge-icon { font-size: 22px; }
-        .hero .app-badge .badge-text { line-height: 1.2; }
-        .hero .app-badge .badge-small { font-size: 10px; opacity: 0.7; }
-        @media (max-width: 768px) {
-            .hero .hero-grid { grid-template-columns: 1fr; text-align: center; }
-            .hero .hero-text { text-align: center; }
-            .hero .hero-phone { order: -1; margin-bottom: 24px; }
-            .hero .phone-frame-hero { width: 200px; height: 400px; }
-        }
-
-        /* Sections */
-        section { padding: 80px 0; }
-        section:nth-child(even) { background: var(--bg-alt); }
-        h2 { font-size: 36px; margin-bottom: 16px; text-align: center; }
-        .subtitle { text-align: center; color: var(--text-light); max-width: 600px; margin: 0 auto 48px; font-size: 18px; }
-
-        /* Features grid */
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
-        .feature-card {
-            background: white;
-            padding: 32px;
-            border-radius: var(--radius);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            border: 1px solid #E2E8F0;
-        }
-        .feature-card h3 { font-size: 20px; margin-bottom: 12px; }
-        .feature-card p { color: var(--text-light); font-size: 15px; }
-        .feature-icon { font-size: 36px; margin-bottom: 16px; }
-
-        /* Modes */
-        .modes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
-        .mode-card {
-            padding: 40px;
-            border-radius: var(--radius);
-            border: 1px solid #E2E8F0;
-        }
-        .mode-card.interne { background: #EBF5FF; border-color: #B3D9FF; }
-        .mode-card.pro { background: #F3E8FF; border-color: #D4B3FF; }
-        .mode-card h3 { font-size: 22px; margin-bottom: 16px; }
-        .mode-card ul { list-style: none; }
-        .mode-card li { padding: 8px 0; color: var(--text-light); }
-        .mode-card li::before { content: "✅ "; }
-
-        /* Pricing */
-        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-        .pricing-card {
-            background: white;
-            border-radius: var(--radius);
-            padding: 40px;
-            text-align: center;
-            border: 1px solid #E2E8F0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        }
-        .pricing-card.featured { border-color: var(--primary); transform: scale(1.05); }
-        .pricing-card .price { font-size: 42px; font-weight: 700; color: var(--primary); }
-        .pricing-card .price span { font-size: 16px; color: var(--text-light); }
-        .pricing-card h3 { font-size: 20px; margin-bottom: 8px; }
-        .pricing-card p { color: var(--text-light); margin: 8px 0 24px; }
-        .pricing-card ul { list-style: none; text-align: left; padding: 0 20px; }
-        .pricing-card li { padding: 8px 0; color: var(--text-light); border-bottom: 1px solid #F0F0F0; }
-        .pricing-card li::before { content: "✓ "; color: var(--success); font-weight: bold; }
-        .pricing-card .btn-primary { margin-top: 24px; }
-
-        /* Footer */
-        footer {
-            background: #1A202C;
-            color: white;
-            padding: 40px 0;
-            text-align: center;
-        }
-        footer p { opacity: 0.6; font-size: 14px; }
-
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 32px; }
-            .modes-grid { grid-template-columns: 1fr; }
-            .pricing-grid { grid-template-columns: 1fr; }
-            .pricing-card.featured { transform: none; }
-            header .container { flex-direction: column; gap: 12px; }
-            nav { flex-wrap: wrap; justify-content: center; gap: 2px; }
-            nav a.nav-link { padding: 6px 10px; font-size: 12px; }
-            .nav-btn { padding: 6px 14px; font-size: 12px; }
-            .nav-divider { display: none; }
-        }
-    
-/* QR Scan Section */
-#qr-scan { background: var(--bg-alt); }
-.qr-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin: 48px 0; }
-.qr-step { text-align: center; padding: 32px 24px; background: #FFF; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-.qr-step-num { width: 48px; height: 48px; line-height: 48px; background: var(--primary); color: #FFF; border-radius: 50%; font-weight: 800; font-size: 20px; margin: 0 auto 16px; }
-.qr-step h3 { font-size: 18px; margin-bottom: 8px; }
-.qr-step p { font-size: 14px; color: var(--text-light); }
-.qr-demo { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; margin-top: 48px; padding: 40px; background: #FFF; border-radius: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-.qr-benefits { list-style: none; }
-.qr-benefits li { padding: 8px 0; font-size: 14px; color: var(--text-light); }
-.qr-benefits li:before { content: "✓ "; color: var(--success); font-weight: bold; }
-/* Phone mockup removed - replaced by Zebra photo */
-@media (max-width: 768px) { .qr-steps { grid-template-columns: 1fr; } .qr-demo { grid-template-columns: 1fr; } }
-
-            /* Modal */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.5); z-index: 1000;
-            display: flex; align-items: center; justify-content: center;
-            backdrop-filter: blur(4px);
-        }
-        .modal-content {
-            background: white; border-radius: 16px; padding: 40px;
-            max-width: 440px; width: 90%; position: relative;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            animation: modalFadeIn 0.2s ease;
-        }
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: scale(0.95) translateY(10px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-        }
-        .modal-close {
-            position: absolute; top: 12px; right: 16px;
-            background: none; border: none; font-size: 28px;
-            cursor: pointer; color: #999; line-height: 1;
-        }
-        .modal-close:hover { color: #333; }
-        .modal-content h2 { font-size: 24px; margin-bottom: 8px; text-align: left; }
-        #demo-submit-btn:hover { opacity: 0.9; }
-        #demo-submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="container">
-            <div class="logo">
-                <span class="logo-icon">🧹</span>
-                Nettoyeur <span>Pro</span>
-            </div>
-            <nav>
-                <a href="#features" class="nav-link">Fonctionnalités</a>
-                <a href="#qr-scan" class="nav-link">Scan QR</a>
-                <a href="#modes" class="nav-link">Modes</a>
-                <a href="#pricing" class="nav-link">Tarifs</a>
-                <a href="#contact" class="nav-link">Contact</a>
-                <span class="nav-divider"></span>
-                <a href="https://nettoyeurpro.app.a0.dev/signup" class="nav-btn nav-btn-signup" target="_blank">S'inscrire</a>
-                <a href="https://nettoyeurpro.app.a0.dev/signin" class="nav-btn nav-btn-login" target="_blank">Se connecter</a>
-            </nav>
-    </header>
-
-    <section class="hero">
-        <div class="container">
-            
-                <div class="hero-grid">
-                    <div class="hero-text">
-                    <h1>La conformité HACCP simplifiée</h1>
-                    <p>Automatisez la gestion de vos cahiers des charges, la traçabilité des nettoyages et les contrôles sanitaires. Gagnez du temps, évitez les amendes.</p>
-                    <a href="javascript:void(0)" class="btn-primary" onclick="openDemoModal()">Demander une démo</a>
-                    <a href="#features" class="btn-outline">En savoir plus</a>
-                    <div class="app-store-badges" style="justify-content:flex-start;">
-                        <a href="https://play.google.com/store/apps/details?id=nettoyeurpro.app.a0.dev" class="app-badge" target="_blank">
-                            <span class="badge-icon">▶</span>
-                            <span class="badge-text"><span class="badge-small">Disponible sur</span><br>Google Play</span>
-                        </a>
-                        <a href="#" class="app-badge">
-                            
-                            <span class="badge-text"><span class="badge-small">Bientôt sur</span><br>App Store</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="hero-phone">
-                    <div class="phone-frame-hero">
-                        <div class="phone-notch-hero"></div>
-                        <div class="phone-screen-wrap">
-                            <img src="np-app-screenshot.jpg" alt="Aperçu Nettoyeur Pro" class="phone-screen-hero">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="features">
-        <div class="container">
-            <h2>Une plateforme complète</h2>
-            <p class="subtitle">Tout ce dont vous avez besoin pour assurer la conformité et la traçabilité de vos opérations de nettoyage.</p>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">📋</div>
-                    <h3>Checklists HACCP</h3>
-                    <p>Contrôles sanitaires quotidiens avec validation automatique selon les seuils HACCP.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🌡️</div>
-                    <h3>Relevés température</h3>
-                    <p>Scan QR code par zone froide, saisie rapide et validation en temps réel.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📱</div>
-                    <h3>Scan sans app</h3>
-                    <p>Scannez le QR code avec n'importe quel téléphone pour remplir un relevé sans installer l'application.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Rapports automatiques</h3>
-                    <p>Générez des rapports de conformité prêts pour les inspections DDPP en un clic.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔍</div>
-                    <h3>Traçabilité complète</h3>
-                    <p>Chaque action est horodatée et attribuée à un opérateur. Historique complet.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🛡️</div>
-                    <h3>Conformité réglementaire</h3>
-                    <p>Respect des normes HACCP, NF X50-780 et règlement UE 2017/625.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-        <section id="qr-scan">
-      <div class="container">
-        <div class="badge">SCAN & GO</div>
-        <h2>Un QR code, un geste, un relevé</h2>
-        <p class="section-desc">Pas d'application à installer. Pas de login complexe. Juste un scan et votre saisie est enregistrée.</p>
-        
-        <div class="qr-steps">
-          <div class="qr-step">
-            <div class="qr-step-num">1</div>
-            <h3>Scannez le QR code</h3>
-            <p>Positionné sur chaque équipement (vitrine froide, chambre, zone de préparation). Un scan suffit.</p>
-          </div>
-          <div class="qr-step">
-            <div class="qr-step-num">2</div>
-            <h3>Remplissez en un clic</h3>
-            <p>Le formulaire s'ouvre automatiquement, pré-rempli avec les infos de l'équipement et la plage de conformité.</p>
-          </div>
-          <div class="qr-step">
-            <div class="qr-step-num">3</div>
-            <h3>Validez et tracez</h3>
-            <p>Un appui sur "Soumettre" et la donnée est horodatée, signée et stockée. Finie la paperasse.</p>
-          </div>
-        </div>
-
-        <div class="qr-demo">
-          <div class="qr-demo-content">
-            <h3>Compatible tout type de smartphone</h3>
-            <p>Que ce soit un terminal Zebra, un Android ou un iPhone, le formulaire web s'adapte automatiquement. Aucune installation requise — le QR code ouvre directement la page.</p>
-            <ul class="qr-benefits">
-              <li>Pas d'application à installer</li>
-              <li>Pas de compte utilisateur pour les relevés</li>
-              <li>Fonctionne sur n'importe quel appareil</li>
-              <li>Photo possible en cas d'anomalie</li>
-              <li>Preuve de passage horodatée</li>
-            </ul>
-          </div>
-          <div class="qr-demo-visual">
-            <img src="zebra-terminal.jpg" alt="Terminal Zebra avec le formulaire Nettoyeur Pro" style="width:100%;max-width:360px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.1);display:block;margin:0 auto;">
-          </div>
-        </div>
-      </div>
-    </section>
-    <section id="modes">
-        <div class="container">
-            <h2>Deux modes d'usage</h2>
-            <p class="subtitle">Une solution adaptée à votre organisation.</p>
-            <div class="modes-grid">
-                <div class="mode-card interne">
-                    <h3>🏪 Mode Interne</h3>
-                    <p style="margin-bottom: 20px;">Pour les supermarchés et magasins qui gèrent leurs propres équipes.</p>
-                    <ul>
-                        <li>Gestion des zones froides avec QR codes</li>
-                        <li>Relevés de température HACCP</li>
-                        <li>Checklists de nettoyage et contrôles</li>
-                        <li>Rapports internes de conformité</li>
-                        <li>Opérateurs internes invités par le responsable</li>
-                    </ul>
-                </div>
-                <div class="mode-card pro">
-                    <h3>🤝 Mode Pro</h3>
-                    <p style="margin-bottom: 20px;">Pour les donneurs d'ordre avec prestataire de nettoyage.</p>
-                    <ul>
-                        <li>Suivi des missions par site</li>
-                        <li>Checklists de prestation personnalisées</li>
-                        <li>Validation client des interventions</li>
-                        <li>Rapports d'intervention automatiques</li>
-                        <li>Gestion des équipes externes</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="pricing">
-        <div class="container">
-            <h2>Tarifs transparents</h2>
-            <p class="subtitle">Un abonnement par site, sans engagement.</p>
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3>Interne</h3>
-                    <p>Pour les magasins en régie</p>
-                    <div class="price">129€ <span>/mois</span></div>
-                    <ul>
-                        <li>Gestion des zones froides</li>
-                        <li>Relevés QR code température</li>
-                        <li>Opérateurs internes illimités</li>
-                        <li>Rapports de conformité</li>
-                        <li>Support email</li>
-                    </ul>
-                    <a href="#contact" class="btn-primary">Choisir Interne</a>
-                </div>
-                <div class="pricing-card featured">
-                    <h3>Pro</h3>
-                    <p>Le plus populaire</p>
-                    <div class="price">299€ <span>/mois</span></div>
-                    <ul>
-                        <li>Tout le mode Interne +</li>
-                        <li>Gestion prestataire externe</li>
-                        <li>Missions et checklists pro</li>
-                        <li>Rapports automatiques</li>
-                        <li>Support prioritaire</li>
-                    </ul>
-                    <a href="#contact" class="btn-primary">Choisir Pro</a>
-                </div>
-                <div class="pricing-card">
-                    <h3>Groupe</h3>
-                    <p>Chaînes multi-sites</p>
-                    <div class="price" style="font-size: 36px;">Sur devis</div>
-                    <ul>
-                        <li>Tout le mode Pro +</li>
-                        <li>Multi-sites et multi-prestataires</li>
-                        <li>Tableau de bord consolidé</li>
-                        <li>API et intégrations</li>
-                        <li>Support dédié</li>
-                    </ul>
-                    <a href="#contact" class="btn-primary">Nous contacter</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" style="background: var(--primary); color: white;">
-        <div class="container" style="text-align: center;">
-            <h2 style="color: white;">Prêt à simplifier votre conformité ?</h2>
-            <p class="subtitle" style="color: rgba(255,255,255,0.85); max-width: 500px;">Contactez-nous pour une démo personnalisée de 30 minutes.</p>
-            <p style="font-size: 18px; margin-top: 24px;">📧 <a href="mailto:contact@nettoyeur.pro" style="color: white;">contact@nettoyeur.pro</a></p>
-        </div>
-    </section>
-
-    <!-- Modal formulaire démo -->
-    <div id="demo-modal" class="modal-overlay" style="display:none;">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeDemoModal()">&times;</button>
-            <h2>Demander une démo</h2>
-            <p style="color: var(--text-light); margin-bottom: 24px;">Laissez-nous votre email, nous vous contacterons pour organiser une démo personnalisée.</p>
-            <form id="demo-form" onsubmit="return submitDemoForm(event)">
-                <input type="email" id="demo-email" placeholder="Votre adresse email" required style="width:100%;padding:14px 16px;border:1px solid #E2E8F0;border-radius:8px;font-size:16px;margin-bottom:16px;box-sizing:border-box;">
-                <button type="submit" id="demo-submit-btn" style="width:100%;padding:14px;background:var(--primary);color:white;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;">Envoyer</button>
-            </form>
-            <div id="demo-success" style="display:none;text-align:center;padding:20px;">
-                <div style="font-size:48px;margin-bottom:12px;">✅</div>
-                <h3 style="color:var(--success);margin-bottom:8px;">Demande envoyée !</h3>
-                <p style="color:var(--text-light);">Nous vous recontacterons très prochainement.</p>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <div class="container">
-            <p>© 2026 Nettoyeur Pro — Tous droits réservés.</p>
-<p style="margin-top:12px;font-size:13px">
-<a href="/legal/cgu.html" style="color:rgba(255,255,255,0.7);text-decoration:none;margin:0 8px">CGU</a>·
-<a href="/legal/cgv.html" style="color:rgba(255,255,255,0.7);text-decoration:none;margin:0 8px">CGV</a>·
-<a href="/legal/mentions_legales.html" style="color:rgba(255,255,255,0.7);text-decoration:none;margin:0 8px">Mentions Légales</a>·
-<a href="/legal/politique_confidentialite.html" style="color:rgba(255,255,255,0.7);text-decoration:none;margin:0 8px">Politique de Confidentialité</a>·
-<a href="/legal/dpa.html" style="color:rgba(255,255,255,0.7);text-decoration:none;margin:0 8px">DPA</a>
-</p>
-            <p style="margin-top: 8px;">Conformité HACCP · NF X50-780 · Règlement UE 2017/625</p>
-        </div>
-    </footer>
-    <script>
-        function openDemoModal() {
-            document.getElementById('demo-modal').style.display = 'flex';
-            document.getElementById('demo-form').style.display = 'block';
-            document.getElementById('demo-success').style.display = 'none';
-            document.getElementById('demo-email').value = '';
-        }
-        function closeDemoModal() {
-            document.getElementById('demo-modal').style.display = 'none';
-        }
-        document.getElementById('demo-modal').addEventListener('click', function(e) {
-            if (e.target === this) closeDemoModal();
-        });
-        async function submitDemoForm(e) {
-            e.preventDefault();
-            const email = document.getElementById('demo-email').value.trim();
-            const btn = document.getElementById('demo-submit-btn');
-            btn.disabled = true; btn.textContent = 'Envoi...';
-            try {
-                const r = await fetch('https://srv1560384.hstgr.cloud/api/demo/send-demo', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({email})
-                });
-                const data = await r.json();
-                if (data.success) {
-                    document.getElementById('demo-form').style.display = 'none';
-                    document.getElementById('demo-success').style.display = 'block';
-                } else {
-                    alert('Erreur: ' + (data.error || 'Réessaie plus tard.'));
-                }
-            } catch(e) {
-                alert('Erreur réseau. Vérifie ta connexion et réessaie.');
+<!DOCTYPE html><html class="scroll-smooth" lang="fr"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>NettoyeurPro - La conformité HACCP &amp; le nettoyage simples comme un jeu d'enfant</title>
+<!-- Google Fonts: Plus Jakarta Sans for ultra-friendly, readable modern UI -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS v3 with Forms & Container-Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration for Game-like, high contrast vivid colors -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              blue: '#0d6efd',
+              navy: '#003eb3',
+              dark: '#0a192f',
+              lightBlue: '#f0f6ff',
+            },
+            status: {
+              green: '#10b981',
+              greenLight: '#d1fae5',
+              greenDark: '#047857',
+              orange: '#f59e0b',
+              orangeLight: '#fef3c7',
+              orangeDark: '#b45309',
+              red: '#ef4444',
+              redLight: '#fee2e2',
+              redDark: '#b91c1c',
             }
-            btn.disabled = false; btn.textContent = 'Envoyer';
-            return false;
+          },
+          boxShadow: {
+            'bubbly': '0 12px 32px -4px rgba(13, 110, 253, 0.18)',
+            'card-hover': '0 20px 35px -8px rgba(0, 0, 0, 0.1)',
+            'tactile-btn': '0 6px 0 0 rgba(0, 0, 0, 0.2)',
+            'tactile-blue': '0 6px 0 0 #004dc7',
+            'tactile-green': '0 6px 0 0 #047857',
+          }
         }
-    </script>
-</body>
-<!-- Built at 00:31:16 -->
-</html>
+      }
+    }
+  </script>
+<!-- Custom Styles for Animations and Tactile Feedback -->
+<style data-purpose="custom-animations">
+    @keyframes pulse-subtle {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+    }
+    .animate-bounce-gentle {
+      animation: pulse-subtle 3s ease-in-out infinite;
+    }
+    .tactile-press {
+      transition: all 0.12s ease-in-out;
+    }
+    .tactile-press:active {
+      transform: translateY(4px);
+    }
+    .tactile-btn-blue:active {
+      box-shadow: 0 2px 0 0 #004dc7 !important;
+    }
+    .tactile-btn-green:active {
+      box-shadow: 0 2px 0 0 #047857 !important;
+    }
+  </style>
+</head>
+<body class="font-sans text-slate-800 bg-[#f8faff] antialiased selection:bg-brand-blue selection:text-white">
+<!-- BEGIN: MainHeader -->
+<header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b-2 border-slate-100 shadow-sm transition-all" data-purpose="primary-navbar">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+<!-- Brand Logo -->
+<a class="flex items-center gap-3 group" href="#" title="Retour à l'accueil NettoyeurPro">
+<div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-navy to-brand-blue flex items-center justify-center text-white text-2xl shadow-md group-hover:rotate-6 transition-transform">
+          🧹
+        </div>
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="text-2xl font-black tracking-tight text-slate-900">Nettoyeur<span class="text-brand-blue">Pro</span></span>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+<span class="w-2 h-2 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
+              HACCP Zen
+            </span>
+</div>
+<span class="text-xs font-semibold text-slate-400">Hygiène &amp; Traçabilité Ultra-Simple</span>
+</div>
+</a>
+<!-- Desktop Nav Links -->
+<nav aria-label="Navigation principale" class="hidden lg:flex items-center gap-8 font-bold text-slate-600 text-[15px]">
+<a class="hover:text-brand-blue transition-colors flex items-center gap-1" href="#fonctionnalites">
+<span>✨</span> Fonctionnalités
+        </a>
+<a class="hover:text-brand-blue transition-colors flex items-center gap-1" href="#methode-scan">
+<span>📱</span> Scan QR Magique
+        </a>
+<a class="hover:text-brand-blue transition-colors flex items-center gap-1" href="#modes">
+<span>🏢</span> 2 Modes d'usage
+        </a>
+<a class="hover:text-brand-blue transition-colors flex items-center gap-1" href="#tarifs">
+<span>🏷️</span> Tarifs Clairs
+        </a>
+</nav>
+<!-- Action Buttons -->
+<div class="flex items-center gap-3">
+<a class="hidden sm:inline-flex items-center justify-center px-4 py-2.5 rounded-xl text-sm font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors" href="#contact">
+          Se connecter
+        </a>
+<a class="tactile-press tactile-btn-blue inline-flex items-center gap-2 px-5 py-3 rounded-2xl text-base font-extrabold text-white bg-brand-blue shadow-tactile-blue hover:brightness-105" href="#demo">
+<span>🚀</span>
+<span>Demander une démo</span>
+</a>
+</div>
+</div>
+</header>
+<!-- END: MainHeader -->
+<main>
+<!-- BEGIN: HeroSection -->
+<section class="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28 bg-gradient-to-b from-blue-50 via-white to-[#f8faff]" data-purpose="hero-banner" id="demo">
+<!-- Background playful shapes -->
+<div class="absolute -top-12 -right-12 w-96 h-96 bg-blue-200/40 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute top-1/2 -left-20 w-80 h-80 bg-emerald-100/60 rounded-full blur-3xl pointer-events-none"></div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+<!-- Hero Text Content -->
+<div class="lg:col-span-7 text-center lg:text-left">
+<!-- Ultra-playful pill badge -->
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border-2 border-brand-blue/20 shadow-sm mb-6">
+<span class="text-xl">🎈</span>
+<span class="text-xs sm:text-sm font-black text-brand-navy uppercase tracking-wider">
+                La méthode zéro prise de tête pour la cuisine et les équipes
+              </span>
+</div>
+<!-- Big Impact Title -->
+<h1 class="text-4xl sm:text-5xl xl:text-6xl font-black text-slate-950 tracking-tight leading-[1.15] mb-6">
+              La conformité HACCP enfin <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-blue-600 to-emerald-500 underline decoration-yellow-400 decoration-wavy decoration-4">simple comme un jeu !</span>
+</h1>
+<!-- Subtitle -->
+<p class="text-lg sm:text-xl font-medium text-slate-600 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+              Fini les classeurs gras perdus, les oublis et le stress du contrôle sanitaire. 
+              <span class="font-extrabold text-slate-800">Scannez un QR code</span>, touchez <span class="text-status-greenDark font-bold bg-emerald-100 px-2 py-0.5 rounded-md">🟢 C'est Validé</span> et retournez à votre métier en 15 secondes.
+            </p>
+<!-- Big Tactile CTA Buttons -->
+<div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-10">
+<a class="tactile-press tactile-btn-blue w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl text-lg font-extrabold text-white bg-brand-blue shadow-tactile-blue hover:brightness-110" href="#demo">
+<span>✨</span>
+<span>Essayer gratuitement (15 min)</span>
+</a>
+<a class="tactile-press tactile-btn-green w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl text-lg font-extrabold text-white bg-emerald-600 shadow-tactile-green hover:bg-emerald-500" href="#methode-scan">
+<span>👀</span>
+<span>Voir comment ça marche</span>
+</a>
+</div>
+<!-- 3 Reassurance Pills -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t-2 border-slate-200/60 max-w-xl mx-auto lg:mx-0">
+<div class="flex items-center gap-2 justify-center lg:justify-start bg-white/80 p-2.5 rounded-xl border border-slate-200">
+<span class="text-2xl">⚡</span>
+<span class="text-xs font-bold text-slate-700">0 application à télécharger</span>
+</div>
+<div class="flex items-center gap-2 justify-center lg:justify-start bg-white/80 p-2.5 rounded-xl border border-slate-200">
+<span class="text-2xl">👌</span>
+<span class="text-xs font-bold text-slate-700">Pris en main en 30 secondes</span>
+</div>
+<div class="flex items-center gap-2 justify-center lg:justify-start bg-white/80 p-2.5 rounded-xl border border-slate-200">
+<span class="text-2xl">🛡️</span>
+<span class="text-xs font-bold text-slate-700">100% Conforme DDPP &amp; UE</span>
+</div>
+</div>
+</div>
+<!-- Hero Interactive Gamified Phone Mockup -->
+<div class="lg:col-span-5 flex justify-center relative">
+<!-- Floating Gamified Badge Left -->
+<div class="absolute -top-4 -left-6 z-20 bg-white border-2 border-emerald-400 p-3.5 rounded-2xl shadow-xl flex items-center gap-3 animate-bounce-gentle">
+<div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center text-xl font-black">
+                ✓
+              </div>
+<div>
+<p class="text-xs font-black uppercase text-emerald-700">Inspection Réussie</p>
+<p class="text-sm font-bold text-slate-800">Rapport généré en 1 clic !</p>
+</div>
+</div>
+<!-- Floating Gamified Badge Right -->
+<div class="absolute -bottom-6 -right-4 z-20 bg-white border-2 border-amber-400 p-3.5 rounded-2xl shadow-xl flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center text-xl font-black">
+                🔔
+              </div>
+<div>
+<p class="text-xs font-black uppercase text-amber-600">Alerte Frigo Évitée</p>
+<p class="text-sm font-bold text-slate-800">Frigo M8 réparé à temps</p>
+</div>
+</div>
+<!-- Smartphone Frame -->
+<div class="w-full max-w-[340px] bg-slate-900 rounded-[46px] p-4 shadow-2xl border-4 border-slate-800 ring-8 ring-blue-100/70 relative">
+<!-- Speaker & Camera Notch -->
+<div class="w-32 h-5 bg-slate-900 rounded-b-xl mx-auto mb-3 flex items-center justify-center gap-2">
+<div class="w-3 h-3 rounded-full bg-slate-800"></div>
+<div class="w-10 h-1.5 rounded-full bg-slate-800"></div>
+</div>
+<!-- Phone Screen Content -->
+<div class="bg-slate-50 rounded-[34px] overflow-hidden p-4 border border-slate-200">
+<!-- Mockup App Header -->
+<div class="flex items-center justify-between pb-3 border-b border-slate-200">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-lg bg-brand-blue text-white flex items-center justify-center text-sm font-bold">N</div>
+<span class="text-xs font-extrabold text-slate-800">Boulangerie Saint-Honoré</span>
+</div>
+<span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-700 border border-emerald-300">
+                    🟢 CONFORME
+                  </span>
+</div>
+<!-- Three Big Traffic Light Widgets -->
+<div class="grid grid-cols-3 gap-2 my-3">
+<div class="bg-red-50 border-2 border-red-200 rounded-xl p-2 text-center">
+<span class="text-xs font-black text-red-600">1 Alerte</span>
+<p class="text-lg font-black text-red-700">🔴 +6.8°C</p>
+<p class="text-[9px] font-bold text-red-500">Chambre 1</p>
+</div>
+<div class="bg-amber-50 border-2 border-amber-200 rounded-xl p-2 text-center">
+<span class="text-xs font-black text-amber-600">2 En attente</span>
+<p class="text-lg font-black text-amber-700">🟠 Frigo</p>
+<p class="text-[9px] font-bold text-amber-500">Midi</p>
+</div>
+<div class="bg-emerald-50 border-2 border-emerald-300 rounded-xl p-2 text-center">
+<span class="text-xs font-black text-emerald-700">12 Validés</span>
+<p class="text-lg font-black text-emerald-700">🟢 100%</p>
+<p class="text-[9px] font-bold text-emerald-600">Aujourd'hui</p>
+</div>
+</div>
+<!-- Real-time Scan Simulation Box -->
+<div class="relative bg-blue-600 rounded-2xl p-4 text-white text-center overflow-hidden mb-3 shadow-md">
+<div class="absolute -right-4 -bottom-4 w-20 h-20 bg-white/10 rounded-full"></div>
+<!-- Laser animation effect -->
+<div class="w-16 h-16 bg-white/20 rounded-xl mx-auto flex items-center justify-center mb-2 border-2 border-dashed border-white">
+<span class="text-3xl">📷</span>
+</div>
+<p class="text-xs font-bold uppercase tracking-wider text-blue-100">Scan QR Code Détecté !</p>
+<p class="text-sm font-extrabold text-white">Chambre Froide Positive 2</p>
+<div class="mt-2 bg-white text-brand-blue py-1 px-3 rounded-lg text-xs font-black">
+                    Relevé auto pré-rempli : 2.4°C
+                  </div>
+</div>
+<!-- Big Touch Button -->
+<button class="w-full py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-extrabold text-xs shadow-md uppercase tracking-wider flex items-center justify-center gap-1.5">
+<span>✅</span> Valider le relevé (1 clic)
+                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: HeroSection -->
+<!-- BEGIN: TrafficLightRuleSection -->
+<section class="py-16 bg-white border-y-2 border-slate-100" data-purpose="traffic-light-concept">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center max-w-3xl mx-auto mb-12">
+<span class="px-4 py-1.5 rounded-full text-xs font-extrabold bg-blue-100 text-brand-navy uppercase tracking-wider">
+            La Règle d'or NettoyeurPro
+          </span>
+<h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-3">
+            Compris en 1 milliseconde : <br class="hidden sm:block"> Le principe du <span class="text-brand-blue">Feu Tricolore Universel</span>
+</h2>
+<p class="text-slate-600 text-base sm:text-lg mt-3 font-medium">
+            Même fatigué, dans le bruit du service ou sans parler français couramment, chaque collaborateur comprend immédiatement la situation.
+          </p>
+</div>
+<!-- 3 Color Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+<!-- Green Card -->
+<div class="bg-gradient-to-b from-emerald-50 to-white rounded-3xl p-7 border-3 border-emerald-300 shadow-sm relative overflow-hidden group hover:-translate-y-1 transition-all">
+<div class="w-16 h-16 rounded-2xl bg-emerald-500 text-white flex items-center justify-center text-3xl font-black mb-6 shadow-md">
+              🟢
+            </div>
+<span class="inline-block px-3 py-1 rounded-full text-xs font-black bg-emerald-100 text-emerald-800 uppercase tracking-wider mb-2">
+              Zone Sereine
+            </span>
+<h3 class="text-2xl font-black text-emerald-900 mb-2">VERT = Tout va bien !</h3>
+<p class="text-slate-600 font-medium text-sm leading-relaxed mb-4">
+              Les températures sont parfaites (entre 0°C et +4°C). Les zones ont été désinfectées et validées. L'inspecteur repart avec le sourire.
+            </p>
+<div class="bg-white rounded-xl p-3 border border-emerald-200 flex items-center gap-2">
+<span class="text-emerald-600 font-black">✓</span>
+<span class="text-xs font-bold text-slate-700">Aucune action requise</span>
+</div>
+</div>
+<!-- Orange Card -->
+<div class="bg-gradient-to-b from-amber-50 to-white rounded-3xl p-7 border-3 border-amber-300 shadow-sm relative overflow-hidden group hover:-translate-y-1 transition-all">
+<div class="w-16 h-16 rounded-2xl bg-amber-500 text-white flex items-center justify-center text-3xl font-black mb-6 shadow-md">
+              🟠
+            </div>
+<span class="inline-block px-3 py-1 rounded-full text-xs font-black bg-amber-100 text-amber-800 uppercase tracking-wider mb-2">
+              À Faire Aujourd'hui
+            </span>
+<h3 class="text-2xl font-black text-amber-900 mb-2">ORANGE = Tâche en attente</h3>
+<p class="text-slate-600 font-medium text-sm leading-relaxed mb-4">
+              Un relevé température du midi est requis, ou le plan de nettoyage de la zone plonge doit être validé avant 15h.
+            </p>
+<div class="bg-white rounded-xl p-3 border border-amber-200 flex items-center gap-2">
+<span class="text-amber-600 font-black">⏳</span>
+<span class="text-xs font-bold text-slate-700">Rappel doux sur le terminal</span>
+</div>
+</div>
+<!-- Red Card -->
+<div class="bg-gradient-to-b from-red-50 to-white rounded-3xl p-7 border-3 border-red-300 shadow-sm relative overflow-hidden group hover:-translate-y-1 transition-all">
+<div class="w-16 h-16 rounded-2xl bg-red-500 text-white flex items-center justify-center text-3xl font-black mb-6 shadow-md">
+              🔴
+            </div>
+<span class="inline-block px-3 py-1 rounded-full text-xs font-black bg-red-100 text-red-800 uppercase tracking-wider mb-2">
+              Action Immédiate
+            </span>
+<h3 class="text-2xl font-black text-red-900 mb-2">ROUGE = Alerte Critique</h3>
+<p class="text-slate-600 font-medium text-sm leading-relaxed mb-4">
+              Porte de congélateur restée ouverte, rupture de chaîne du froid (+8°C) ou oubli d'hygiène. Le responsable est notifié par SMS.
+            </p>
+<div class="bg-white rounded-xl p-3 border border-red-200 flex items-center gap-2">
+<span class="text-red-600 font-black">🚨</span>
+<span class="text-xs font-bold text-slate-700">Sauvetage marchandise immédiat</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: TrafficLightRuleSection -->
+<!-- BEGIN: ScanAndGoStepsSection -->
+<section class="py-20 bg-[#f8faff]" data-purpose="three-step-workflow" id="methode-scan">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center max-w-3xl mx-auto mb-16">
+<span class="text-xs font-black text-brand-blue uppercase tracking-widest bg-blue-100 px-3 py-1 rounded-full">
+            SCAN &amp; GO • LE JEU EN 3 ÉTAPES
+          </span>
+<h2 class="text-3xl sm:text-5xl font-black text-slate-900 mt-3">
+            Un QR code, un geste, c'est relevé !
+          </h2>
+<p class="text-slate-600 text-lg mt-3 font-medium">
+            Pas d'application à installer. Pas de mot de passe compliqué. Juste un scan et votre journée est en règle.
+          </p>
+</div>
+<!-- The 3 Steps Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+<!-- Step 1 -->
+<div class="bg-white rounded-3xl p-8 border-2 border-blue-200 shadow-sm flex flex-col items-center text-center relative group hover:border-brand-blue transition-all">
+<div class="w-16 h-16 rounded-full bg-brand-blue text-white flex items-center justify-center text-2xl font-black mb-6 shadow-tactile-blue">
+              1
+            </div>
+<div class="w-14 h-14 rounded-2xl bg-blue-50 text-brand-blue flex items-center justify-center text-2xl mb-4">
+              📷
+            </div>
+<h3 class="text-xl font-extrabold text-slate-900 mb-2">Scannez le QR code</h3>
+<p class="text-slate-600 text-sm font-medium">
+              Positionné sur chaque équipement (vitrine froide, chambre, zone de préparation). Un scan suffit.
+            </p>
+</div>
+<!-- Step 2 -->
+<div class="bg-white rounded-3xl p-8 border-2 border-amber-200 shadow-sm flex flex-col items-center text-center relative group hover:border-amber-400 transition-all">
+<div class="w-16 h-16 rounded-full bg-amber-500 text-white flex items-center justify-center text-2xl font-black mb-6 shadow-tactile-btn">
+              2
+            </div>
+<div class="w-14 h-14 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl mb-4">
+              📝
+            </div>
+<h3 class="text-xl font-extrabold text-slate-900 mb-2">Remplissez en un clic</h3>
+<p class="text-slate-600 text-sm font-medium">
+              Le formulaire s'ouvre automatiquement, pré-rempli avec les infos de l'équipement et la plage de conformité.
+            </p>
+</div>
+<!-- Step 3 -->
+<div class="bg-white rounded-3xl p-8 border-2 border-emerald-200 shadow-sm flex flex-col items-center text-center relative group hover:border-emerald-500 transition-all">
+<div class="w-16 h-16 rounded-full bg-emerald-500 text-white flex items-center justify-center text-2xl font-black mb-6 shadow-tactile-green">
+              3
+            </div>
+<div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl mb-4">
+              ✅
+            </div>
+<h3 class="text-xl font-extrabold text-slate-900 mb-2">Validez et tracez</h3>
+<p class="text-slate-600 text-sm font-medium">
+              Un appui sur "Soumettre" et la donnée est horodatée, signée et stockée. Fini la paperasse.
+            </p>
+</div>
+</div>
+<!-- Zebra & Multi-device Compatibility Banner -->
+<div class="mt-14 bg-white rounded-3xl p-8 lg:p-12 border-2 border-slate-200 shadow-sm">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+<div class="lg:col-span-7">
+<span class="text-xs font-black text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full uppercase tracking-wider">
+                Zéro contrainte technique
+              </span>
+<h3 class="text-2xl sm:text-3xl font-black text-slate-900 mt-3 mb-4">
+                Compatible tout type de smartphone ou terminal industriel Zebra
+              </h3>
+<p class="text-slate-600 font-medium mb-6 leading-relaxed">
+                Que ce soit un terminal durci de logistique Zebra, un vieil Android, un iPhone personnel ou une tablette murale : le formulaire web ultra-léger s'adapte automatiquement sans rien installer.
+              </p>
+<!-- Checklist features -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<div class="flex items-center gap-2.5 text-slate-700 font-bold text-sm">
+<span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs">✓</span>
+                  Pas d'application à installer
+                </div>
+<div class="flex items-center gap-2.5 text-slate-700 font-bold text-sm">
+<span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs">✓</span>
+                  Pas de compte utilisateur requis
+                </div>
+<div class="flex items-center gap-2.5 text-slate-700 font-bold text-sm">
+<span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs">✓</span>
+                  Fonctionne sur n'importe quel appareil
+                </div>
+<div class="flex items-center gap-2.5 text-slate-700 font-bold text-sm">
+<span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs">✓</span>
+                  Photos possibles en cas d'anomalie
+                </div>
+<div class="flex items-center gap-2.5 text-slate-700 font-bold text-sm sm:col-span-2">
+<span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs">✓</span>
+                  Preuve de passage horodatée &amp; géolocalisable
+                </div>
+</div>
+</div>
+<!-- Terminal Mockup Illustration -->
+<div class="lg:col-span-5 flex justify-center">
+<img src="zebra-terminal.jpg" alt="Terminal Zebra affichant le formulaire de relevé Nettoyeur Pro" class="w-full max-w-sm rounded-3xl shadow-xl border-4 border-slate-200 block">
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: ScanAndGoStepsSection -->
+<!-- BEGIN: AllFeaturesGrid -->
+<section class="py-20 bg-white" data-purpose="features-grid" id="fonctionnalites">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center max-w-3xl mx-auto mb-16">
+<span class="text-xs font-black text-brand-blue uppercase tracking-widest bg-blue-100 px-3 py-1 rounded-full">
+            Équipement Complet
+          </span>
+<h2 class="text-3xl sm:text-5xl font-black text-slate-900 mt-3">
+            Une plateforme complète et sans superflu
+          </h2>
+<p class="text-slate-600 text-lg mt-3 font-medium">
+            Tout ce dont vous avez besoin pour assurer la conformité et la traçabilité de vos opérations de nettoyage.
+          </p>
+</div>
+<!-- 6 Big Feature Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Card 1 -->
+<div class="bg-white rounded-3xl p-7 border-2 border-slate-100 hover:border-brand-blue/40 shadow-sm hover:shadow-card-hover transition-all flex flex-col">
+<div class="w-14 h-14 rounded-2xl bg-blue-100 text-brand-blue flex items-center justify-center text-3xl mb-5 shadow-sm">
+              📋
+            </div>
+<h3 class="text-xl font-black text-slate-900 mb-2">Checklists HACCP</h3>
+<p class="text-slate-600 text-sm font-medium leading-relaxed">
+              Contrôles sanitaires quotidiens avec validation automatique selon les seuils HACCP de votre branche d'activité.
+            </p>
+</div>
+<!-- Card 2 -->
+<div class="bg-white rounded-3xl p-7 border-2 border-slate-100 hover:border-brand-blue/40 shadow-sm hover:shadow-card-hover transition-all flex flex-col">
+<div class="w-14 h-14 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center text-3xl mb-5 shadow-sm">
+              🌡️
+            </div>
+<h3 class="text-xl font-black text-slate-900 mb-2">Relevés température</h3>
+<p class="text-slate-600 text-sm font-medium leading-relaxed">
+              Scan QR code par zone froide, saisie rapide et validation en temps réel avec alerte automatique si température hors plage.
+            </p>
+</div>
+<!-- Card 3 -->
+<div class="bg-white rounded-3xl p-7 border-2 border-slate-100 hover:border-brand-blue/40 shadow-sm hover:shadow-card-hover transition-all flex flex-col">
+<div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-3xl mb-5 shadow-sm">
+              📱
+            </div>
+<h3 class="text-xl font-black text-slate-900 mb-2">Scan sans app</h3>
+<p class="text-slate-600 text-sm font-medium leading-relaxed">
+              Scannez le QR code avec n'importe quel téléphone pour remplir un relevé sans installer la moindre application.
+            </p>
+</div>
+<!-- Card 4 -->
+<div class="bg-white rounded-3xl p-7 border-2 border-slate-100 hover:border-brand-blue/40 shadow-sm hover:shadow-card-hover transition-all flex flex-col">
+<div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mb-5 shadow-sm">
+              📊
+            </div>
+<h3 class="text-xl font-black text-slate-900 mb-2">Rapports automatiques</h3>
+<p class="text-slate-600 text-sm font-medium leading-relaxed">
+              Générez des rapports de conformité complets et clairs, prêts pour les inspections DDPP en un clic PDF.
+            </p>
+</div>
+<!-- Card 5 -->
+<div class="bg-white rounded-3xl p-7 border-2 border-slate-100 hover:border-brand-blue/40 shadow-sm hover:shadow-card-hover transition-all flex flex-col">
+<div class="w-14 h-14 rounded-2xl bg-cyan-100 text-cyan-600 flex items-center justify-center text-3xl mb-5 shadow-sm">
+              🔍
+            </div>
+<h3 class="text-xl font-black text-slate-900 mb-2">Traçabilité complète</h3>
+<p class="text-slate-600 text-sm font-medium leading-relaxed">
+              Chaque action est horodatée et attribuée à un opérateur. Historique complet inviolable et stocké en France.
+            </p>
+</div>
+<!-- Card 6 -->
+<div class="bg-white rounded-3xl p-7 border-2 border-slate-100 hover:border-brand-blue/40 shadow-sm hover:shadow-card-hover transition-all flex flex-col">
+<div class="w-14 h-14 rounded-2xl bg-blue-100 text-brand-navy flex items-center justify-center text-3xl mb-5 shadow-sm">
+              🛡️
+            </div>
+<h3 class="text-xl font-black text-slate-900 mb-2">Conformité réglementaire</h3>
+<p class="text-slate-600 text-sm font-medium leading-relaxed">
+              Respect rigoureux des normes HACCP, NF V01-006 et règlement UE 2017/625 pour une sérénité juridique totale.
+            </p>
+</div>
+</div>
+</div>
+</section>
+<!-- END: AllFeaturesGrid -->
+<!-- BEGIN: DualModesSection -->
+<section class="py-20 bg-slate-50 border-t-2 border-slate-200/70" data-purpose="two-usage-modes" id="modes">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center max-w-3xl mx-auto mb-16">
+<span class="text-xs font-black text-purple-700 uppercase tracking-widest bg-purple-100 px-3 py-1 rounded-full">
+            Flexibilité Métier
+          </span>
+<h2 class="text-3xl sm:text-5xl font-black text-slate-900 mt-3">
+            Deux modes d'usage adaptés à votre équipe
+          </h2>
+<p class="text-slate-600 text-lg mt-3 font-medium">
+            Une solution modulable que vous gériez tout vous-même ou avec une société prestataire.
+          </p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- Mode Interne -->
+<div class="bg-white rounded-3xl p-8 lg:p-10 border-3 border-blue-200 shadow-sm hover:border-brand-blue transition-all flex flex-col">
+<div class="flex items-center gap-3 mb-6">
+<span class="text-4xl">🏢</span>
+<div>
+<h3 class="text-2xl font-black text-slate-900">Mode Interne</h3>
+<p class="text-slate-500 font-bold text-sm">Pour les supermarchés, restaurants et magasins gérant en propre</p>
+</div>
+</div>
+<p class="text-slate-600 text-sm mb-6 font-medium">
+              Permet à vos équipes internes de saisir leurs relevés en quelques secondes et de donner aux responsables une vision temps réel.
+            </p>
+<ul class="space-y-3.5 mb-8 flex-1">
+<li class="flex items-center gap-3 text-slate-700 font-bold text-sm">
+<span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs shrink-0">✓</span>
+                Gestion des zones froides avec QR codes
+              </li>
+<li class="flex items-center gap-3 text-slate-700 font-bold text-sm">
+<span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs shrink-0">✓</span>
+                Relevés de température HACCP instantanés
+              </li>
+<li class="flex items-center gap-3 text-slate-700 font-bold text-sm">
+<span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs shrink-0">✓</span>
+                Checklists de nettoyage et contrôles sanitaires
+              </li>
+<li class="flex items-center gap-3 text-slate-700 font-bold text-sm">
+<span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs shrink-0">✓</span>
+                Rapports internes de conformité automatiques
+              </li>
+<li class="flex items-center gap-3 text-slate-700 font-bold text-sm">
+<span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs shrink-0">✓</span>
+                Opérateurs internes illimités invités par le responsable
+              </li>
+</ul>
+<a class="tactile-press w-full py-3.5 bg-blue-50 text-brand-blue hover:bg-brand-blue hover:text-white rounded-2xl font-extrabold text-sm text-center transition-all border border-blue-200" href="#tarifs">
+              Découvrir le mode Interne
+            </a>
+</div>
+<!-- Mode Pro (Prestataires) -->
+<div class="bg-purple-50/50 rounded-3xl p-8 lg:p-10 border-3 border-purple-200 shadow-sm hover:border-purple-400 transition-all flex flex-col">
+<div class="flex items-center gap-3 mb-6">
+<span class="text-4xl">👑</span>
+<div>
+<h3 class="text-2xl font-black text-slate-900">Mode Pro</h3>
+<p class="text-purple-700 font-bold text-sm">Pour les donneurs d'ordre avec prestataire de nettoyage externe</p>
+</div>
+</div>
+<p class="text-slate-600 text-sm mb-6 font-medium">
+              Idéal pour suivre le passage des sociétés de ménage extérieures, certifier leurs heures et valider la qualité des prestations.
+            </p>
+<ul class="space-y-3.5 mb-8 flex-1">
+<li class="flex items-center gap-3 text-slate-700 font-bold text-sm">
+<span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs shrink-0">✓</span>
+                Suivi des missions par site et par contrat
+              </li>
+<li class="flex items-center gap-3 text-slate-700 font-bold text-sm">
+<span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs shrink-0">✓</span>
+                Checklists de prestation personnalisées
+              </li>
+<li class="flex items-center gap-3 text-slate-700 font-bold text-sm">
+<span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs shrink-0">✓</span>
+                Validation client des interventions avec signature
+              </li>
+<li class="flex items-center gap-3 text-slate-700 font-bold text-sm">
+<span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs shrink-0">✓</span>
+                Rapports d'intervention automatiques pour la facturation
+              </li>
+<li class="flex items-center gap-3 text-slate-700 font-bold text-sm">
+<span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs shrink-0">✓</span>
+                Gestion des équipes externes avec preuve de passage
+              </li>
+</ul>
+<a class="tactile-press w-full py-3.5 bg-purple-600 text-white hover:bg-purple-700 rounded-2xl font-extrabold text-sm text-center transition-all shadow-md" href="#tarifs">
+              Découvrir le mode Pro
+            </a>
+</div>
+</div>
+</div>
+</section>
+<!-- END: DualModesSection -->
+<!-- BEGIN: TransparentPricingSection -->
+<section class="py-20 bg-white" data-purpose="pricing-table" id="tarifs">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center max-w-3xl mx-auto mb-16">
+<span class="text-xs font-black text-brand-blue uppercase tracking-widest bg-blue-100 px-3 py-1 rounded-full">
+            0 Frais Cachés
+          </span>
+<h2 class="text-3xl sm:text-5xl font-black text-slate-900 mt-3">
+            Tarifs transparents &amp; sans surprise
+          </h2>
+<p class="text-slate-600 text-lg mt-3 font-medium">
+            Un abonnement par site, sans engagement de durée, avec essai gratuit de 14 jours.
+          </p>
+</div>
+<!-- Pricing Cards Row -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+<!-- Card 1: Interne -->
+<div class="bg-white rounded-3xl p-8 border-2 border-slate-200 flex flex-col text-center hover:border-slate-300 transition-all">
+<h3 class="text-2xl font-black text-slate-900 mb-1">Interne</h3>
+<p class="text-xs font-bold text-slate-500 mb-6">Pour les magasins en régie</p>
+<div class="mb-6">
+<span class="text-4xl sm:text-5xl font-black text-slate-900">129€</span>
+<span class="text-slate-500 font-bold text-sm">/mois</span>
+</div>
+<ul class="space-y-3 text-left text-sm font-semibold text-slate-600 mb-8 flex-1">
+<li class="flex items-center gap-2">
+<span class="text-emerald-500 font-black">✓</span> Gestion des zones froides
+              </li>
+<li class="flex items-center gap-2">
+<span class="text-emerald-500 font-black">✓</span> Relevés QR code température
+              </li>
+<li class="flex items-center gap-2">
+<span class="text-emerald-500 font-black">✓</span> Opérateurs internes illimités
+              </li>
+<li class="flex items-center gap-2">
+<span class="text-emerald-500 font-black">✓</span> Rapports de conformité
+              </li>
+<li class="flex items-center gap-2">
+<span class="text-emerald-500 font-black">✓</span> Support email réactif
+              </li>
+</ul>
+<a class="tactile-press w-full py-3.5 rounded-2xl font-extrabold text-sm text-brand-blue bg-blue-50 hover:bg-blue-100 transition-all border border-blue-200" href="#demo">
+              Choisir Interne
+            </a>
+</div>
+<!-- Card 2: Pro (Featured) -->
+<div class="bg-white rounded-3xl p-8 border-3 border-brand-blue shadow-bubbly flex flex-col text-center relative hover:scale-[1.02] transition-all">
+<!-- Badge Featured -->
+<div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-amber-400 text-slate-900 font-black text-xs px-4 py-1.5 rounded-full uppercase tracking-wider shadow-md">
+              ⭐ Le plus populaire
+            </div>
+<h3 class="text-2xl font-black text-slate-900 mb-1">Pro</h3>
+<p class="text-xs font-bold text-brand-blue mb-6">Idéal prestataires &amp; commerces exigeants</p>
+<div class="mb-6">
+<span class="text-4xl sm:text-5xl font-black text-brand-blue">299€</span>
+<span class="text-slate-500 font-bold text-sm">/mois</span>
+</div>
+<ul class="space-y-3 text-left text-sm font-bold text-slate-700 mb-8 flex-1">
+<li class="flex items-center gap-2">
+<span class="text-brand-blue font-black">✓</span> Tout le mode Interne +
+              </li>
+<li class="flex items-center gap-2">
+<span class="text-emerald-500 font-black">✓</span> Gestion prestataire externe
+              </li>
+<li class="flex items-center gap-2">
+<span class="text-emerald-500 font-black">✓</span> Missions et checklists pro
+              </li>
+<li class="flex items-center gap-2">
+<span class="text-emerald-500 font-black">✓</span> Rapports automatiques DDPP
+              </li>
+<li class="flex items-center gap-2">
+<span class="text-emerald-500 font-black">✓</span> Support prioritaire 7j/7
+              </li>
+</ul>
+<a class="tactile-press tactile-btn-blue w-full py-4 rounded-2xl font-extrabold text-base text-white bg-brand-blue shadow-tactile-blue hover:brightness-105 transition-all" href="#demo">
+              Choisir Pro 🚀
+            </a>
+</div>
+<!-- Card 3: Groupe -->
+<div class="bg-white rounded-3xl p-8 border-2 border-slate-200 flex flex-col text-center hover:border-slate-300 transition-all">
+<h3 class="text-2xl font-black text-slate-900 mb-1">Groupe</h3>
+<p class="text-xs font-bold text-slate-500 mb-6">Chaînes et multi-sites</p>
+<div class="mb-6">
+<span class="text-3xl sm:text-4xl font-black text-slate-900">Sur devis</span>
+<p class="text-slate-500 font-bold text-xs mt-1">Tarif dégressif par magasin</p>
+</div>
+<ul class="space-y-3 text-left text-sm font-semibold text-slate-600 mb-8 flex-1">
+<li class="flex items-center gap-2">
+<span class="text-emerald-500 font-black">✓</span> Tout le mode Pro +
+              </li>
+<li class="flex items-center gap-2">
+<span class="text-emerald-500 font-black">✓</span> Multi-sites et multi-prestataires
+              </li>
+<li class="flex items-center gap-2">
+<span class="text-emerald-500 font-black">✓</span> Tableau de bord consolidé siège
+              </li>
+<li class="flex items-center gap-2">
+<span class="text-emerald-500 font-black">✓</span> API et intégrations sur-mesure
+              </li>
+<li class="flex items-center gap-2">
+<span class="text-emerald-500 font-black">✓</span> Responsable de compte dédié
+              </li>
+</ul>
+<a class="tactile-press w-full py-3.5 rounded-2xl font-extrabold text-sm text-slate-700 bg-slate-100 hover:bg-slate-200 transition-all" href="#contact">
+              Nous contacter
+            </a>
+</div>
+</div>
+<div class="text-center mt-10">
+<p class="text-sm font-bold text-slate-500">
+            🔒 14 jours d'essai gratuit • Sans carte bancaire • Arrêt en un clic
+          </p>
+</div>
+</div>
+</section>
+<!-- END: TransparentPricingSection -->
+<!-- BEGIN: BigCallToActionBanner -->
+<section class="py-20 bg-brand-blue relative overflow-hidden" data-purpose="bottom-cta-banner" id="contact">
+<!-- Background Circles -->
+<div class="absolute -bottom-20 -left-20 w-80 h-80 bg-white/10 rounded-full blur-2xl"></div>
+<div class="absolute -top-20 -right-20 w-80 h-80 bg-white/10 rounded-full blur-2xl"></div>
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+<div class="w-16 h-16 rounded-2xl bg-white/20 text-white flex items-center justify-center text-3xl mx-auto mb-6 shadow-inner">
+          🤝
+        </div>
+<h2 class="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight mb-4">
+          Prêt à simplifier votre conformité ?
+        </h2>
+<p class="text-blue-100 text-lg sm:text-xl font-semibold max-w-2xl mx-auto mb-10">
+          Contactez-nous pour une démo personnalisée de 15 minutes. Vos équipes sauront l'utiliser le jour même !
+        </p>
+<!-- Big Email & Action Box -->
+<div class="inline-flex flex-col sm:flex-row items-center gap-4 bg-white/15 p-3 rounded-3xl border border-white/25 backdrop-blur-md">
+<a class="px-6 py-4 rounded-2xl font-black text-lg text-white hover:underline flex items-center gap-3" href="mailto:contact@nettoyeur.pro">
+<span>✉️</span>
+<span>contact@nettoyeur.pro</span>
+</a>
+<a class="tactile-press w-full sm:w-auto px-8 py-4 bg-white hover:bg-yellow-300 text-brand-navy font-black rounded-2xl text-lg shadow-tactile-btn transition-all" href="#demo">
+            Planifier ma Démo 🚀
+          </a>
+</div>
+</div>
+</section>
+<!-- END: BigCallToActionBanner -->
+</main>
+<!-- BEGIN: MainFooter -->
+<footer class="bg-slate-950 text-slate-400 py-12 text-sm border-t border-slate-800" data-purpose="footer">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-slate-800">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-brand-blue text-white flex items-center justify-center text-xl font-bold">
+            🧹
+          </div>
+<div>
+<span class="text-lg font-black text-white">Nettoyeur<span class="text-brand-blue">Pro</span></span>
+<p class="text-xs text-slate-500">La solution d'hygiène la plus simple au monde.</p>
+</div>
+</div>
+<div class="flex flex-wrap items-center justify-center gap-6 font-bold text-xs">
+<a class="hover:text-white transition-colors" href="legal/cgu.html">CGU</a>
+<a class="hover:text-white transition-colors" href="legal/cgv.html">CGV</a>
+<a class="hover:text-white transition-colors" href="legal/mentions_legales.html">Mentions Légales</a>
+<a class="hover:text-white transition-colors" href="legal/politique_confidentialite.html">Politique de Confidentialité</a>
+<a class="hover:text-white transition-colors" href="legal/dpa.html">DPA &amp; Données RGPD</a>
+</div>
+</div>
+<div class="mt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+<p>© 2026 Nettoyeur Pro — Tous droits réservés.</p>
+<p class="font-semibold text-slate-400">
+          Conformité HACCP — Norme NF V01-006 — Règlement Européen UE 2017/625
+        </p>
+</div>
+</div>
+</footer>
+<!-- END: MainFooter -->
+</body></html>
