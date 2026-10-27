@@ -1,6 +1,11 @@
 <!DOCTYPE html><html class="scroll-smooth" lang="fr"><head>
 <meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
+<meta name="theme-color" content="#0d6efd">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="NettoyeurPro">
+<meta name="format-detection" content="telephone=no">
 <title>NettoyeurPro - La conformité HACCP &amp; le nettoyage simples comme un jeu d'enfant</title>
 <!-- Google Fonts: Plus Jakarta Sans for ultra-friendly, readable modern UI -->
 <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -138,18 +143,18 @@
   }
 </style>
 </head>
-<body class="font-sans text-slate-800 bg-[#f8faff] antialiased selection:bg-brand-blue selection:text-white">
+<body class="font-sans text-slate-800 bg-[#f8faff] antialiased selection:bg-brand-blue selection:text-white overflow-x-hidden">
 <!-- BEGIN: MainHeader -->
 <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b-2 border-slate-100 shadow-sm transition-all" data-purpose="primary-navbar">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2">
 <!-- Brand Logo -->
 <a class="flex items-center gap-2.5 group shrink-0" href="#" title="Retour à l'accueil NettoyeurPro">
-<img src="logos/logo-np.png" alt="NettoyeurPro" class="h-12 sm:h-14 w-auto shrink-0 group-hover:scale-105 transition-transform" width="288" height="220">
+<img src="logos/logo-np.png" alt="NettoyeurPro" class="h-10 sm:h-14 w-auto shrink-0 group-hover:scale-105 transition-transform" width="288" height="220">
 <div class="flex flex-col min-w-0">
 <div class="flex items-center gap-1.5 whitespace-nowrap">
-<span class="text-lg sm:text-xl font-black tracking-tight text-slate-900">Nettoyeur<span class="text-brand-blue">Pro</span></span>
+<span class="text-base sm:text-xl font-black tracking-tight text-slate-900">Nettoyeur<span class="text-brand-blue">Pro</span></span>
 </div>
-<span class="text-[11px] font-semibold text-slate-400 whitespace-nowrap">Hygiène &amp; Traçabilité Ultra-Simple</span>
+<span class="hidden xs:block sm:block text-[10px] sm:text-[11px] font-semibold text-slate-400 whitespace-nowrap">Hygiène &amp; Traçabilité Ultra-Simple</span>
 </div>
 </a>
 <!-- Desktop Nav Links -->
@@ -164,12 +169,12 @@
 </a>
 </nav>
 <!-- Action Buttons -->
-<div class="flex items-center gap-2 sm:gap-3">
-<a class="inline-flex items-center justify-center px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors whitespace-nowrap" href="https://nettoyeurpro.app.a0.dev/signin" target="_blank" rel="noopener">
+<div class="flex items-center gap-2 sm:gap-3 shrink-0">
+<a class="inline-flex items-center justify-center px-2.5 py-2 sm:px-4 sm:py-2.5 rounded-xl text-[11px] sm:text-sm font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors whitespace-nowrap" href="https://nettoyeurpro.app.a0.dev/signin" target="_blank" rel="noopener">
           Se connecter
 </a>
-<a class="tactile-press tactile-btn-blue inline-flex items-center gap-2 px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-2xl text-sm sm:text-base font-extrabold text-white bg-brand-blue shadow-tactile-blue hover:brightness-105" href="mailto:contact@nettoyeur.pro?subject=Demande%20de%20d%C3%A9mo%20Nettoyeur%20Pro">
-<span class="hidden sm:inline">Demander une démo</span>
+<a aria-label="Demander une démo" class="hidden sm:inline-flex tactile-press tactile-btn-blue items-center gap-2 px-5 py-3 rounded-2xl text-base font-extrabold text-white bg-brand-blue shadow-tactile-blue hover:brightness-105" href="mailto:contact@nettoyeur.pro?subject=Demande%20de%20d%C3%A9mo%20Nettoyeur%20Pro">
+<span>Demander une démo</span>
 </a>
 </div>
 </div>
@@ -177,7 +182,7 @@
 <!-- END: MainHeader -->
 <main>
 <!-- BEGIN: HeroSection -->
-<section class="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28 bg-gradient-to-b from-blue-50 via-white to-[#f8faff]" data-purpose="hero-banner" id="demo">
+<section class="relative overflow-hidden pt-8 sm:pt-12 pb-16 sm:pb-20 lg:pt-20 lg:pb-28 bg-gradient-to-b from-blue-50 via-white to-[#f8faff]" data-purpose="hero-banner" id="demo">
 <!-- Background playful shapes -->
 <div class="absolute -top-12 -right-12 w-96 h-96 bg-blue-200/40 rounded-full blur-3xl pointer-events-none"></div>
 <div class="absolute top-1/2 -left-20 w-80 h-80 bg-emerald-100/60 rounded-full blur-3xl pointer-events-none"></div>
@@ -186,17 +191,17 @@
 <!-- Hero Text Content -->
 <div class="lg:col-span-7 text-center lg:text-left">
 <!-- Ultra-playful pill badge -->
-<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border-2 border-brand-blue/20 shadow-sm mb-6">
+<div class="inline-flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white border-2 border-brand-blue/20 shadow-sm mb-5 sm:mb-6">
 <span class="text-xs sm:text-sm font-black text-brand-navy uppercase tracking-wider">
                 La méthode zéro prise de tête pour les supermarchés et les équipes
 </span>
 </div>
 <!-- Big Impact Title -->
-<h1 class="text-4xl sm:text-5xl xl:text-6xl font-black text-slate-950 tracking-tight leading-[1.15] mb-6">
+<h1 class="text-[30px] xs:text-4xl sm:text-5xl xl:text-6xl font-black text-slate-950 tracking-tight leading-[1.12] mb-5 sm:mb-6">
               La conformité HACCP enfin <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-blue-600 to-emerald-500 underline decoration-yellow-400 decoration-wavy decoration-4">simple comme un jeu !</span>
 </h1>
 <!-- Subtitle -->
-<p class="text-lg sm:text-xl font-medium text-slate-600 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+<p class="text-[15px] sm:text-xl font-medium text-slate-600 mb-7 sm:mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
               Fini les classeurs gras perdus, les oublis et le stress du contrôle sanitaire. 
               <span class="font-extrabold text-slate-800">Scannez un QR code</span>, touchez <span class="text-status-greenDark font-bold bg-emerald-100 px-2 py-0.5 rounded-md"> C'est Validé</span> et retournez à votre métier en 15 secondes.
 </p>
@@ -225,7 +230,7 @@
 <!-- Hero Interactive Gamified Phone Mockup -->
 <div class="lg:col-span-5 flex justify-center relative">
 <!-- Floating Gamified Badge Left -->
-<div class="absolute -top-12 -left-14 z-20 bg-white border-2 border-emerald-400 p-2.5 rounded-2xl shadow-xl flex items-center gap-2 animate-bounce-gentle max-w-[196px]">
+<div class="hidden sm:flex absolute -top-12 -left-14 z-20 bg-white border-2 border-emerald-400 p-2.5 rounded-2xl shadow-xl flex items-center gap-2 animate-bounce-gentle max-w-[196px]">
 <div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center text-xl font-black">
                 ✓
 </div>
@@ -235,7 +240,7 @@
 </div>
 </div>
 <!-- Floating Gamified Badge Right -->
-<div class="absolute -bottom-16 -right-4 z-20 bg-white border-2 border-amber-400 p-2 rounded-2xl shadow-xl flex items-center gap-2 max-w-[188px]">
+<div class="hidden sm:flex absolute -bottom-16 -right-4 z-20 bg-white border-2 border-amber-400 p-2 rounded-2xl shadow-xl flex items-center gap-2 max-w-[188px]">
 <div class="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center text-xl font-black"><svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg>
 </div>
 <div>
@@ -960,4 +965,34 @@ Ils nous accompagnent et nous soutiennent
 </div>
 </footer>
 <!-- END: MainFooter -->
+
+<!-- BEGIN: MobileAppBar (webapp, mobile uniquement) -->
+<nav aria-label="Navigation mobile" class="lg:hidden fixed bottom-0 left-0 right-0 z-[60] border-t border-slate-200" style="background:rgba(255,255,255,.98);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding-bottom:env(safe-area-inset-bottom);box-shadow:0 -6px 20px -8px rgba(15,23,42,.12);">
+<div class="grid grid-cols-4 items-end pt-2 pb-2 px-1">
+<a class="flex flex-col items-center gap-1 py-1" href="#fonctionnalites">
+<svg class="w-[19px] h-[19px] fill-slate-500" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+<span class="text-[9.5px] font-bold text-slate-500">Fonctions</span>
+</a>
+<a class="flex flex-col items-center gap-1 py-1" href="#methode-scan">
+<svg class="w-[19px] h-[19px] fill-slate-500" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11h8V3H3v8zm2-6h4v4H5V5zM3 21h8v-8H3v8zm2-6h4v4H5v-4zM13 3v8h8V3h-8zm6 6h-4V5h4v4zM13 13h2v2h-2zm2 2h2v2h-2zm2-2h2v2h-2zm2 2h2v2h-2zm-4 2h2v2h-2zm2 2h2v2h-2zm-2-4h2v2h-2z"/></svg>
+<span class="text-[9.5px] font-bold text-slate-500">Scan QR</span>
+</a>
+<a class="flex flex-col items-center gap-1 py-1" href="#tarifs">
+<svg class="w-[19px] h-[19px] fill-slate-500" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 6.6H21l-5.4 4 2 6.6-5.6-4.2L6.4 19l2-6.6L3 8.6h6.6z"/></svg>
+<span class="text-[9.5px] font-bold text-slate-500">Tarifs</span>
+</a>
+<a class="flex flex-col items-center gap-1 py-1" href="mailto:contact@nettoyeur.pro?subject=Demande%20de%20d%C3%A9mo%20Nettoyeur%20Pro">
+<span class="bg-brand-blue text-white rounded-full w-11 h-11 -mt-3 flex items-center justify-center shadow-lg" style="box-shadow:0 6px 16px -4px rgba(13,110,253,.55);">
+<svg class="w-5 h-5 fill-white" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+</span>
+<span class="text-[9.5px] font-extrabold text-brand-blue leading-none">Démo</span>
+</a>
+</div>
+</nav>
+<!-- END: MobileAppBar -->
+<style>
+  @media (max-width:1023px){
+    body{ padding-bottom:calc(72px + env(safe-area-inset-bottom)); }
+  }
+</style>
 </body></html>
